@@ -1,10 +1,4 @@
 // Loader hide + scroll enable
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  background-color: #000014;
-}
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => document.getElementById('loader').style.display = 'none', 1800);
   setTimeout(() => {
@@ -102,5 +96,6 @@ window.addEventListener("load", () => {
     }
   }, 1000);
 });
+
 
 
