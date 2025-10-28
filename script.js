@@ -9,7 +9,49 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.style.overflow = 'auto';
     document.body.style.overflow = 'auto';
   }, 1850);
+
+  // initialize theme from storage immediately so FOUC minimized
+  initTheme();
 });
+
+/* ---------- Theme toggle (light default, dark optional) ---------- */
+function initTheme(){
+  try {
+    const saved = localStorage.getItem('watodo-theme'); // 'dark' or 'light'
+    const body = document.body;
+    const toggle = document.getElementById('themeToggle');
+    const apply = (theme) => {
+      if (theme === 'dark') {
+        body.setAttribute('data-theme', 'dark');
+        if (toggle) {
+          toggle.setAttribute('aria-pressed','true');
+          toggle.textContent = '🌙';
+        }
+      } else {
+        body.removeAttribute('data-theme');
+        if (toggle) {
+          toggle.setAttribute('aria-pressed','false');
+          toggle.textContent = '🌞';
+        }
+      }
+    };
+
+    // apply saved (default light)
+    apply(saved === 'dark' ? 'dark' : 'light');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        const next = isDark ? 'light' : 'dark';
+        apply(next);
+        try { localStorage.setItem('watodo-theme', next); } catch(e) {}
+      });
+    }
+  } catch (e) {
+    // silent fail (e.g., localStorage disabled)
+    console.warn('Theme init failed', e);
+  }
+}
 
 /* ---------- Particles (kept original behavior) ---------- */
 (() => {
@@ -31,7 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if(p.x<-10)p.x=w+10; if(p.x>w+10)p.x=-10;
       if(p.y<-10)p.y=h+10; if(p.y>h+10)p.y=-10;
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(0,200,255,'+p.alpha+')';
+      // color slightly brighter in light mode, but keep same feel
+      ctx.fillStyle = 'rgba(0,160,220,'+p.alpha+')';
       ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
       ctx.fill();
     }
@@ -40,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
   draw();
 })();
 
-/* ---------- Robot subtle animation ---------- */
+/* ---------- Robot subtle animation (kept) ---------- */
 (() => {
   const robot = document.getElementById('robot');
   if (!robot) return;
@@ -55,9 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(()=>{ requestAnimationFrame(animate); }, 900);
 })();
 
-/* ---------- Rotating words ---------- */
+/* ---------- Rotating words (updated student-focused list) ---------- */
 (() => {
-  const words = ['HABITS','PROGRESS','UNFINISHED WORK','DEADLINES'];
+  const words = ['ACTIVITIES','DEADLINES','PROGRESS','HABITS'];
   const el = document.getElementById('cycleText');
   if (!el) return;
   let i = 0;
@@ -89,9 +132,10 @@ function showPopup(){
   }, 1800);
 }
 const tryBtn = document.getElementById('tryBtn');
+// previously we had remindBtn which is removed — safe check kept
 const remindBtn = document.getElementById('remindBtn');
 if (tryBtn) tryBtn.addEventListener('click', showPopup);
-if (remindBtn) remindBtn.addEventListener('click', showPopup);
+if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
 
 /* ---------- Load Facebook SDK (kept) ---------- */
 (function(d,s,id){
@@ -122,8 +166,67 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup);
   });
 })();
 
-/* ---------- Small UI quick handlers (optional hooks) ---------- */
-/* Example: "Get Started" button scroll to hero CTA */
+/* ---------- Smooth header nav scrolling (new) ---------- */
+(function(){
+  const navLinks = document.querySelectorAll('header .header-nav a[href^="#"]');
+  if (!navLinks) return;
+  navLinks.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = a.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // optionally update focus for accessibility
+        setTimeout(()=> target.setAttribute('tabindex','-1'), 600);
+      }
+    });
+  });
+})();
+
+/* ---------- Robot bubble interaction (new) ---------- */
+(function(){
+  const wrap = document.getElementById('robotWrap') || document.querySelector('.robot-wrap');
+  const bubble = document.getElementById('robotBubble');
+  let hideTimer = null;
+
+  if (!wrap || !bubble) return;
+
+  function showBubble(text){
+    bubble.textContent = text || 'Hey! Ready to plan your day?';
+    bubble.hidden = false;
+    bubble.classList.add('in-view');
+    // clear previous
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => {
+      bubble.classList.remove('in-view');
+      bubble.hidden = true;
+    }, 4200);
+  }
+
+  // click interaction
+  wrap.addEventListener('click', () => {
+    showBubble('Kumusta! Gaano katagal mag-study ka ngayon?');
+  });
+
+  // keyboard interaction (Enter / Space)
+  wrap.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      showBubble('Nice! Let\'s organise your tasks.');
+    }
+  });
+
+  // also allow bubble to hide when clicked
+  bubble.addEventListener('click', () => {
+    bubble.classList.remove('in-view');
+    bubble.hidden = true;
+    if (hideTimer) clearTimeout(hideTimer);
+  });
+})();
+
+/* ---------- Small UI quick handlers (kept + improved) ---------- */
+/* "Get Started" button scroll to hero CTA */
 const getStarted = document.getElementById('getStarted');
 if (getStarted) {
   getStarted.addEventListener('click', () => {
@@ -134,7 +237,19 @@ if (getStarted) {
 const learnMore = document.getElementById('learnMore');
 if (learnMore) {
   learnMore.addEventListener('click', () => {
-    const el = document.querySelector('.features');
+    const el = document.querySelector('#features');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 }
+
+/* ---------- Accessibility: keyboard for theme toggle ---------- */
+(function(){
+  const toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+  toggle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggle.click();
+    }
+  });
+})();
