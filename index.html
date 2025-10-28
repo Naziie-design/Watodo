@@ -21,27 +21,59 @@
   <canvas id="particles" aria-hidden="true"></canvas>
 
   <header>
-    <img src="images/logo.png?v=2" alt="Watodo logo">
-    <div>
-      <div class="brand">Watodo.com</div>
-      <div class="tag">Automate your day. Simplify your decisions.</div>
+    <div class="header-left">
+      <img src="images/logo.png?v=2" alt="Watodo logo">
+      <div>
+        <div class="brand">Watodo.com</div>
+        <div class="tag">Automate your day. Simplify your decisions.</div>
+      </div>
     </div>
+
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#why">Why Watodo</a>
+      <a href="#contact">Contact</a>
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌞</button>
+    </nav>
   </header>
 
   <main class="app" role="main">
-    <section class="poster" aria-label="Watodo hero">
-      <h1>Forgetful?</h1>
-      <h2>Track your:</h2>
-      <div class="track"><span class="cycle" id="cycleText">HABITS</span></div>
+    <!-- HERO / SPLIT (home) -->
+    <section id="home" class="poster hero-split" aria-label="Watodo hero">
+      <div class="hero-grid">
+        <!-- LEFT: copy / CTAs -->
+        <div class="hero-left">
+          <h1>Smarter days start here.</h1>
+          <h2>Track your : <span class="track-inline" id="cycleText">ACTIVITIES</span></h2>
 
-      <div class="robot-wrap" aria-hidden="true">
-        <div class="robot-glow" aria-hidden="true"></div>
-        <img src="images/robot.png" class="robot" id="robot" alt="Watodo robot mascot">
-      </div>
+          <p class="hero-sub">Watodo — built for students to stay productive and stress-free.</p>
 
-      <div class="buttons">
-        <button class="btn primary" id="tryBtn">Try Now</button>
-        <button class="btn" id="remindBtn">Remind Me Later</button>
+          <div class="buttons">
+            <button class="btn primary" id="tryBtn">Get Started</button>
+            <!-- Remind Me Later removed intentionally per request -->
+          </div>
+
+          <ul class="quick-info" aria-hidden="false">
+            <li>⚡ Auto reminders 24/7</li>
+            <li>💬 Smart tone customization</li>
+            <li>📅 Track activities, deadlines, progress, habits</li>
+          </ul>
+        </div>
+
+        <!-- RIGHT: robot visual (clickable) -->
+        <div class="hero-right" aria-hidden="true">
+          <div class="robot-wrap" role="button" tabindex="0" id="robotWrap" aria-label="Robot assistant, click to interact">
+            <div class="robot-glow" aria-hidden="true"></div>
+            <img src="images/robot.png" class="robot" id="robot" alt="Watodo robot mascot">
+          </div>
+
+          <!-- robot bubble (hidden by default; JS will toggle) -->
+          <div id="robotBubble" class="robot-bubble" role="status" aria-live="polite" hidden>
+            Hey! Ready to plan your day?
+          </div>
+        </div>
       </div>
 
       <div class="meta">
@@ -54,7 +86,7 @@
     </section>
 
     <!-- ================== FEATURES SECTION ================== -->
-    <section class="features section-reveal" aria-label="Watodo features">
+    <section id="features" class="features section-reveal" aria-label="Watodo features">
       <div class="container">
         <h3 class="section-title">What Watodo helps you track</h3>
         <p class="section-sub">Small actions. Big improvements. Simple tools that remind and guide you.</p>
@@ -82,7 +114,7 @@
     </section>
 
     <!-- ================== HOW IT WORKS SECTION ================== -->
-    <section class="how section-reveal" aria-label="How Watodo works">
+    <section id="how" class="how section-reveal" aria-label="How Watodo works">
       <div class="container">
         <h3 class="section-title">How it works — 3 simple steps</h3>
         <p class="section-sub">Add tasks. Set reminders. Get notified — that's it.</p>
@@ -110,7 +142,7 @@
     </section>
 
     <!-- ================== WHY WATODO SECTION ================== -->
-    <section class="why section-reveal" aria-label="Why choose Watodo">
+    <section id="why" class="why section-reveal" aria-label="Why choose Watodo">
       <div class="container">
         <h3 class="section-title">Why Watodo</h3>
         <p class="lead">Because your time matters. Not every reminder needs to be loud — some need to be kind. Watodo helps you build momentum with small, consistent actions.</p>
