@@ -221,6 +221,13 @@ body[data-theme="dark"] .fb-glow { background: rgba(255,255,255,0.03); box-shado
 .how-step p { margin:0; color:var(--muted) }
 .circle-num { width:56px; height:56px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#02111a; background:linear-gradient(90deg,var(--neon),var(--neon-2)); margin-bottom:12px; box-shadow:0 12px 40px rgba(0,170,255,0.12); }
 
+/* Dark mode version of How it Works cards */
+body[data-theme="dark"] .how-step {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  border: 1px solid rgba(0,230,255,0.06);
+  color: var(--muted);
+}
+
 /* Why section */
 .why .lead { color:var(--muted); max-width:820px; margin:12px auto 18px; font-size:1.02rem }
 .cta-row { display:flex; gap:12px; justify-content:center; margin-top:12px; flex-wrap:wrap }
@@ -541,6 +548,16 @@ footer { position: fixed; bottom: 16px; left: 0; right: 0; text-align:center; co
   .circle-num { width:48px; height:48px; font-size:0.98rem; }
   .robot { width: 220px; }
 }
+/* ------------------ Footer Robot Fix ------------------ */
+.hero-right img, 
+.hero-right .robot-glow {
+  display: block;
+}
+footer .robot-glow, 
+footer .robot, 
+footer .robot-wrap {
+  display: none !important;
+}
 
 /* ------------------ Small utilities ------------------ */
 .text-center { text-align:center; }
@@ -548,10 +565,3 @@ footer { position: fixed; bottom: 16px; left: 0; right: 0; text-align:center; co
 .hidden { display:none !important; }
 
 /* ------------------ End of file ------------------ */
-
-
-
-
-
-
-
