@@ -526,6 +526,20 @@ body[data-theme="dark"] .fb-glow { background: rgba(255,255,255,0.03); box-shado
 footer { position: fixed; bottom: 16px; left: 0; right: 0; text-align:center; color:var(--muted); opacity:0.95; font-size:0.95rem; z-index:5; background:transparent; }
 .creator { color:var(--neon); font-weight:700; text-shadow:0 0 8px rgba(0,160,255,0.06) }
 
+/* Hide floating W logo / robot glitch at the very bottom */
+footer .robot,
+footer .robot-glow,
+footer .robot-wrap {
+  display: none !important;
+}
+
+/* Hide old "Coming Soon" placeholder section completely */
+footer .coming-soon,
+.hero-right .coming-soon,
+.coming-soon {
+  display: none !important;
+}
+
 /* Particles (kept) */
 #particles { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.28 }
 
@@ -565,3 +579,4 @@ footer .robot-wrap {
 .hidden { display:none !important; }
 
 /* ------------------ End of file ------------------ */
+
