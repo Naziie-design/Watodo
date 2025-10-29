@@ -580,3 +580,34 @@ footer .robot-wrap {
 
 /* ------------------ End of file ------------------ */
 
+/* --- Force hide leftover debug or placeholder elements --- */
+footer img[src*="W"], 
+footer .robot, 
+footer .robot-wrap, 
+footer .robot-glow, 
+footer .poster img, 
+footer p:has(> strong),
+footer p:has(> span),
+footer p:has(> em),
+footer p:has(> img),
+footer p:has(> svg),
+footer p:has(> a),
+footer:has(> img),
+body > p:has(> img),
+body > p:has(> strong),
+body > p:has(> span),
+body > p:has(> em),
+body > p:has(> svg),
+body > p:has(> a),
+body > p:has(> img),
+body > p:has(> br) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  height: 0 !important;
+}
+
+
+
