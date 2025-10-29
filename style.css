@@ -20,18 +20,33 @@
   --shadow-1: rgba(16,40,70,0.06);
 }
 
-/* ------------------ Dark mode (student-friendly) ------------------ */
+/* ------------------ Dark theme override (use body[data-theme="dark"]) ------------------ */
 body[data-theme="dark"], .theme-dark {
-  --bg-1: #060B20; /* deep navy base */
-  --bg-2: #0A1530; /* darker gradient */
-  --surface: rgba(15, 25, 45, 0.85);
-  --text: #E5F6FF;
-  --muted: #A9E6FF;
+  /* Night Study Mode — deep blue/purple background, still student-friendly */
+  --bg-1: #031025;
+  --bg-2: #050b18;
+  --surface: rgba(255,255,255,0.04);
+  --text: #eaffff;
+  --muted: #bfefff;
   --neon: #00E6FF;
-  --neon-2: #5AD0FF;
-  --glass: rgba(255,255,255,0.04);
-  --card-bg: rgba(10,20,40,0.65);
-  --shadow-1: rgba(0,180,255,0.08);
+  --neon-2: #7CD7FF;
+  --glass: rgba(255,255,255,0.03);
+  --card-bg: rgba(255,255,255,0.04);
+  --shadow-1: rgba(0,160,255,0.08);
+}
+
+/* Robot dark mode fixes */
+body[data-theme="dark"] .robot {
+  filter: drop-shadow(0 12px 24px rgba(0,200,255,0.12));
+  transform: scale(1); /* prevents giant scaling */
+}
+
+body[data-theme="dark"] .robot-glow {
+  opacity: 0.85;
+  width: 360px; /* fixed size to prevent stretching */
+  height: 360px;
+  background: radial-gradient(circle at 40% 40%, rgba(0,230,255,0.15), transparent 15%), 
+              radial-gradient(circle at 60% 60%, rgba(138,63,252,0.08), transparent 20%);
 }
 
 /* ------------------ Base ------------------ */
@@ -498,3 +513,4 @@ footer {
 .text-center { text-align: center; }
 .mt-8 { margin-top: 8px; }
 .hidden { display: none !important; }
+
