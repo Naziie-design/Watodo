@@ -570,6 +570,69 @@ footer .coming-soon,
 
 /* ------------------ End of file ------------------ */
 
+/* ------------------ Mobile Menu Styles ------------------ */
+.menu-toggle {
+  display: none;
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* For small screens only */
+@media (max-width: 820px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Hide nav links initially */
+  .header-nav {
+    display: none;
+    flex-direction: column;
+    background: var(--surface);
+    position: absolute;
+    top: 70px;
+    right: 18px;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 200px;
+    z-index: 99;
+  }
+
+  body[data-theme="dark"] .header-nav {
+    background: rgba(2, 10, 20, 0.9);
+    border: 1px solid rgba(0, 230, 255, 0.06);
+  }
+
+  /* Show nav when active */
+  .header-nav.active {
+    display: flex;
+    animation: slideDown 0.25s ease forwards;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Adjust theme toggle next to menu button */
+  .theme-toggle {
+    font-size: 1.4rem;
+    margin-left: 8px;
+  }
+}
+
+
+
 
 
 
