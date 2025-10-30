@@ -20,7 +20,7 @@
   <div class="frame" aria-hidden="true"></div>
   <canvas id="particles" aria-hidden="true"></canvas>
 
-  <header>
+ <header>
   <div class="header-left">
     <img src="images/logo.png?v=2" alt="Watodo logo">
     <div>
@@ -29,15 +29,19 @@
     </div>
   </div>
 
-  <!-- RIGHT SIDE -->
+  <nav class="header-nav" aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#why">Why Watodo</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <div class="header-right">
-    <nav class="header-nav">
-      <a href="#home">Home</a>
-      <a href="#features">Features</a>
-      <a href="#how">How It Works</a>
-      <a href="#why">Why Watodo</a>
-      <a href="#contact">Contact</a>
-    </nav>
+    <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌞</button>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+  </div>
+</header>
 
     <!-- toggle button -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
@@ -169,6 +173,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
