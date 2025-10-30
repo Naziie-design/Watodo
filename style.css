@@ -631,6 +631,18 @@ footer .coming-soon,
   }
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+header {
+  justify-content: space-between;
+}
+
+
+
 
 
 
