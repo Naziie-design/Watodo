@@ -570,6 +570,33 @@ footer .coming-soon,
 
 /* ------------------ End of file ------------------ */
 
+/* === Header alignment fix for PC view === */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* keep left, center, and right sections properly aligned */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Center the nav links between left and right */
+  gap: 12px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* ------------------ Mobile Menu Styles ------------------ */
 .menu-toggle {
   display: none;
@@ -640,6 +667,7 @@ footer .coming-soon,
 header {
   justify-content: space-between;
 }
+
 
 
 
