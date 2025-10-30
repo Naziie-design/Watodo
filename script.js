@@ -253,3 +253,11 @@ if (learnMore) {
     }
   });
 })();
+
+// Mobile menu toggle
+const menuToggle = document.getElementById("menuToggle");
+const headerNav = document.querySelector(".header-nav");
+
+menuToggle.addEventListener("click", () => {
+  headerNav.classList.toggle("active");
+});
