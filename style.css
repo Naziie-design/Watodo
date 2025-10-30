@@ -149,6 +149,41 @@ body[data-theme="dark"] .quick-info li {
 .btn.primary { background: linear-gradient(90deg, var(--neon), var(--neon-2)); color: #02111a; box-shadow: 0 12px 40px rgba(0,170,255,0.12); }
 .btn.primary:hover { transform: translateY(-6px); box-shadow: 0 18px 60px rgba(0,170,255,0.16); }
 
+/* ------------------ Sign In | Sign Up Toggle ------------------ */
+.form-toggle {
+  display: inline-flex;
+  background: linear-gradient(90deg, var(--neon-2), var(--neon));
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.form-toggle button {
+  padding: 8px 22px;
+  border: none;
+  background: transparent;
+  color: var(--surface);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+  border-radius: 28px;
+}
+
+.form-toggle button.active {
+  background: var(--surface);
+  color: var(--neon);
+  box-shadow: 0 4px 12px rgba(0,160,255,0.12);
+}
+
+.form-toggle button:hover {
+  filter: brightness(1.1);
+}
+
+body[data-theme="dark"] .form-toggle button.active {
+  background: var(--surface); /* dark card color */
+  color: var(--neon-2);       /* neon accent stands out */
+}
+
 /* Right hero robot */
 .hero-right { display:flex; align-items:center; justify-content:center; position:relative; }
 .robot-wrap { cursor:pointer; display:inline-block; border-radius:12px; padding:6px; transition: transform .28s ease; }
@@ -667,6 +702,7 @@ header {
 header {
   justify-content: space-between;
 }
+
 
 
 
