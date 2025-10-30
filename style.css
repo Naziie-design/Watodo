@@ -727,6 +727,13 @@ header {
   justify-content: space-between;
 }
 
+/* ------------------ Utility Classes ------------------ */
+.hidden {
+  display: none !important;
+}
+
+
+
 
 
 
