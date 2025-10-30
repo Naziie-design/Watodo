@@ -261,3 +261,28 @@ const headerNav = document.querySelector(".header-nav");
 menuToggle.addEventListener("click", () => {
   headerNav.classList.toggle("active");
 });
+
+// Toggle Sign In / Sign Up
+const formToggle = document.getElementById('formToggle');
+const signInBtn = document.getElementById('signInBtn');
+const signUpBtn = document.getElementById('signUpBtn');
+const signInForm = document.getElementById('signInForm');
+const signUpForm = document.getElementById('signUpForm');
+
+signInBtn.addEventListener('click', () => {
+  formToggle.classList.remove('sign-up-active');
+  signInBtn.classList.add('active');
+  signUpBtn.classList.remove('active');
+  signInForm.classList.remove('hidden');
+  signUpForm.classList.add('hidden');
+});
+
+signUpBtn.addEventListener('click', () => {
+  formToggle.classList.add('sign-up-active');
+  signUpBtn.classList.add('active');
+  signInBtn.classList.remove('active');
+  signUpForm.classList.remove('hidden');
+  signInForm.classList.add('hidden');
+});
+
+
