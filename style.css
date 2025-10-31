@@ -737,18 +737,16 @@ header {
 
 /* ---------- Meta text styling ---------- */
 .meta {
+  display: inline-block;
   text-align: center;
-  max-width: 680px;
-  margin: 30px auto 0 auto; /* medyo baba para hindi dikit */
-  font-size: 1.08rem;
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  word-break: break-word;
+  max-width: 480px; /* tighter width for better flow */
+  margin: 30px auto;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.45;
+  color: var(--text-color);
+  word-break: keep-all; /* keep words together */
+  white-space: normal; /* allow smooth wrapping */
 }
-
 
 /* ---------- Wato robot font (4) ---------- */
 .wato {
@@ -765,6 +763,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
