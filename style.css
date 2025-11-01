@@ -735,25 +735,16 @@ header {
 /* ---------- Import Orbitron & Roboto Mono fonts ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
 
-/* ---------- Meta text styling ---------- */
+/* ---------- Meta text styling (centered & readable across all screens) ---------- */
 .meta {
-  display: inline-block;
-  text-align: center;
-  max-width: 480px; /* tighter width for better flow */
-  margin: 30px auto;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  line-height: 1.45;
-  color: var(--text-color);
-  word-break: keep-all; /* keep words together */
-  white-space: normal; /* allow smooth wrapping */
-}
-
-/* Center the meta text under the hero on all screens */
-.poster.hero-split .meta {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
+  max-width: 600px;               /* Limit width for better readability on large screens */
+  margin: 30px auto;              /* Center the block horizontally with spacing */
+  font-size: clamp(0.95rem, 2vw, 1.1rem); /* Responsive font size for all devices */
+  line-height: 1.6;               /* Comfortable line spacing for better flow */
+  color: var(--text-color);       /* Dynamic text color (from theme variable) */
+  text-align: center;             /* Center text alignment */
+  word-break: normal;             /* Keep words intact — no awkward breaks */
+  white-space: normal;            /* Allow natural line wrapping */
 }
 
 /* ---------- Wato robot font (4) ---------- */
@@ -771,6 +762,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
