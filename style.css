@@ -761,11 +761,21 @@ header {
 }
 
 /* --- Fix header alignment inside hero-left --- */
-.hero-left h1 {
-  text-align: left;     /* bring back left alignment */
-  width: 100%;          /* keep full width for consistent wrapping */
-  line-height: 1.2;     /* adjust spacing for 2-line flow */
-  margin: 0 auto;       /* keeps it centered within its container visually */
+.hero-left h1,
+.hero-left h2,
+.hero-left p:not(.meta) {
+  text-align: left;     /* bring back left alignment for header & subs */
+  width: 100%;
+  line-height: 1.2;
+  margin: 0 auto;
+}
+
+/* --- Tagline 2-line flow --- */
+.hero-left .meta {
+  max-width: 550px;       /* controls wrapping width for 2-line balance */
+  text-align: center;     /* center text under header */
+  margin: 10px auto 0;    /* center it visually with spacing */
+  line-height: 1.6;       /* readable spacing */
 }
 
 /* ---------- Wato robot font (4) ---------- */
@@ -783,6 +793,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
