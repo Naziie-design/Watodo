@@ -748,15 +748,16 @@ header {
   white-space: normal; /* allow smooth wrapping */
 }
 
-/* ---------- Hero Section Alignment Fix (clean version) ---------- */
-/* Only center the .meta text below hero without touching the hero heading area */
-.poster.hero-split .meta {
-  width: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+/* ---------- Hero Section Alignment Fix ---------- */
+/* Centers both the hero section (.poster.hero-split) and left content (.hero-left)
+   on all screen sizes — useful for balancing layout on desktop & mobile */
+.poster.hero-split,
+.hero-left {
+  width: 100%;                /* ensure full container width */
+  justify-content: center;    /* center horizontally */
+  align-items: center;        /* center vertically (if flex context exists) */
+  flex-direction: column;     /* stack inner elements vertically */
+  text-align: center;         /* align text content in the center */
 }
 
 /* ---------- Wato robot font (4) ---------- */
@@ -774,6 +775,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
