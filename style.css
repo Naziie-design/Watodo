@@ -748,6 +748,14 @@ header {
   white-space: normal; /* allow smooth wrapping */
 }
 
+/* Center the meta text under the hero on all screens */
+.poster.hero-split .meta {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
 /* ---------- Wato robot font (4) ---------- */
 .wato {
   font-family: 'Orbitron', 'Roboto Mono', monospace;
@@ -763,6 +771,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
