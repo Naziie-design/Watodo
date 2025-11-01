@@ -770,6 +770,21 @@ header {
   margin: 0 auto;
 }
 
+/* --- Refined header spacing (balanced look) --- */
+.hero-left h1 {
+  margin-bottom: 4px;     /* small but noticeable gap below header */
+}
+
+.hero-left h2 {
+  margin-top: 2px;        /* keeps h2 close to h1 */
+  margin-bottom: 6px;     /* subtle breathing room before paragraph */
+}
+
+.hero-left p:not(.meta) {
+  margin-top: 4px;        /* gentle space before paragraph */
+  line-height: 1.45;      /* tighter line flow for neat 2-line look */
+}
+
 /* --- Tagline 2-line flow --- */
 .hero-left .meta {
   max-width: 550px;       /* controls wrapping width for 2-line balance */
@@ -793,6 +808,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
