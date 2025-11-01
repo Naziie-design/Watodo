@@ -760,6 +760,14 @@ header {
   text-align: center;         /* align text content in the center */
 }
 
+/* --- Fix header alignment inside hero-left --- */
+.hero-left h1 {
+  text-align: left;     /* bring back left alignment */
+  width: 100%;          /* keep full width for consistent wrapping */
+  line-height: 1.2;     /* adjust spacing for 2-line flow */
+  margin: 0 auto;       /* keeps it centered within its container visually */
+}
+
 /* ---------- Wato robot font (4) ---------- */
 .wato {
   font-family: 'Orbitron', 'Roboto Mono', monospace;
@@ -775,6 +783,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
