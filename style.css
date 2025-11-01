@@ -123,7 +123,7 @@ body[data-theme="dark"] .header-nav a:hover { background: rgba(0,160,255,0.04); 
 .hero-grid { display:grid; grid-template-columns: 1fr 480px; gap:28px; align-items:center; }
 
 /* Left hero copy */
-.hero-left { text-align:center; padding:8px 6px; }
+.hero-left { text-align:left; padding:8px 6px; }
 .hero-left h1 { font-size:2.8rem; margin:0 0 8px; color:var(--text); line-height:1.02; }
 .hero-left h2 { font-size:1.25rem; margin: 0 0 12px; color:var(--neon); letter-spacing:0.4px; display:block; }
 .track-inline { font-weight:800; color:var(--neon-2); margin-left:6px; text-shadow:0 0 10px rgba(78,200,255,0.12); }
@@ -775,6 +775,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
