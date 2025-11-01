@@ -735,17 +735,16 @@ header {
 /* ---------- Import Orbitron & Roboto Mono fonts ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
 
-/* ---------- Meta text styling ---------- */
+/* ---------- Meta text layout fix (2-line centered) ---------- */
 .meta {
-  display: block; /* ensures the whole line is treated as one centered block */
-  text-align: center; /* center-align the text */
-  max-width: 600px; /* keep readable width */
-  margin: 30px auto; /* centers horizontally inside parent */
-  font-size: clamp(0.95rem, 2vw, 1.1rem); /* responsive font */
-  line-height: 1.6; /* balanced vertical rhythm */
+  max-width: 600px;              /* limit text width para mag-break naturally into ~2 lines */
+  margin: 30px auto;             /* center horizontally + spacing */
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  line-height: 1.6;              /* better readability between lines */
   color: var(--text-color);
-  word-break: normal; /* keeps words intact */
-  white-space: normal; /* allows wrapping naturally */
+  text-align: center;            /* center the text itself */
+  word-break: normal;            /* keep words intact */
+  white-space: normal;           /* allow wrapping */
 }
 
 /* ---------- Hero Section Alignment Fix (clean version) ---------- */
@@ -774,6 +773,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
