@@ -735,16 +735,29 @@ header {
 /* ---------- Import Orbitron & Roboto Mono fonts ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
 
-/* ---------- Meta text styling (centered & readable across all screens) ---------- */
+/* ---------- Meta text styling ---------- */
 .meta {
-  max-width: 600px;               /* Limit width for better readability on large screens */
-  margin: 30px auto;              /* Center the block horizontally with spacing */
-  font-size: clamp(0.95rem, 2vw, 1.1rem); /* Responsive font size for all devices */
-  line-height: 1.6;               /* Comfortable line spacing for better flow */
-  color: var(--text-color);       /* Dynamic text color (from theme variable) */
-  text-align: center;             /* Center text alignment */
-  word-break: normal;             /* Keep words intact — no awkward breaks */
-  white-space: normal;            /* Allow natural line wrapping */
+  display: block; /* ensures the whole line is treated as one centered block */
+  text-align: center; /* center-align the text */
+  max-width: 600px; /* keep readable width */
+  margin: 30px auto; /* centers horizontally inside parent */
+  font-size: clamp(0.95rem, 2vw, 1.1rem); /* responsive font */
+  line-height: 1.6; /* balanced vertical rhythm */
+  color: var(--text-color);
+  word-break: normal; /* keeps words intact */
+  white-space: normal; /* allows wrapping naturally */
+}
+
+/* ---------- Hero Section Alignment Fix ---------- */
+/* Centers both the hero section (.poster.hero-split) and left content (.hero-left)
+   on all screen sizes — useful for balancing layout on desktop & mobile */
+.poster.hero-split,
+.hero-left {
+  width: 100%;                /* ensure full container width */
+  justify-content: center;    /* center horizontally */
+  align-items: center;        /* center vertically (if flex context exists) */
+  flex-direction: column;     /* stack inner elements vertically */
+  text-align: center;         /* align text content in the center */
 }
 
 /* ---------- Wato robot font (4) ---------- */
@@ -762,6 +775,7 @@ header {
   text-shadow: 0 0 12px #00c8ff, 0 0 24px #00ffff, 0 0 36px #00ffff;
   transform: scale(1.05);
 }
+
 
 
 
