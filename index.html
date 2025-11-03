@@ -20,14 +20,23 @@
   <div class="frame" aria-hidden="true"></div>
   <canvas id="particles" aria-hidden="true"></canvas>
 
- <header>
-  <div class="header-left">
-    <img src="images/logo.png?v=2" alt="Watodo logo">
-    <div>
-      <div class="brand">Watodo.com</div>
-      <div class="tag">Automate your day. Simplify your decisions.</div>
+<div class="header-left">
+  <img src="images/logo.png?v=2" alt="Watodo logo" id="watoImage">
+
+  <!-- Original header text (hidden later) -->
+  <div class="header-text" id="headerText">
+    <h2>Watodo.com</h2>
+    <p>Automate your day. Simplify your decisions.</p>
+  </div>
+
+  <!-- New Wato chat bubble -->
+  <div class="wato-bubble-box" id="watoBubbleBox">
+    <div class="wato-bubble" id="watoBubble">
+      <p class="wato-line" id="watoLine1">Hi, I’m Wato 👋</p>
+      <p class="wato-line" id="watoLine2">Need a boost today?</p>
     </div>
   </div>
+</div>
 
   <nav class="header-nav" aria-label="Main navigation">
     <a href="#home">Home</a>
@@ -179,6 +188,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
