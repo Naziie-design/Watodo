@@ -184,144 +184,44 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-/* ---------- Robot bubble interaction (new) ---------- */
-(function(){
-  const wrap = document.getElementById('robotWrap') || document.querySelector('.robot-wrap');
-  const bubble = document.getElementById('robotBubble');
-  let hideTimer = null;
-
-  if (!wrap || !bubble) return;
-
-  function showBubble(text){
-    bubble.textContent = text || 'Hey! Ready to plan your day?';
-    bubble.hidden = false;
-    bubble.classList.add('in-view');
-    // clear previous
-    if (hideTimer) clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => {
-      bubble.classList.remove('in-view');
-      bubble.hidden = true;
-    }, 4200);
-  }
-
-  // click interaction
-  wrap.addEventListener('click', () => {
-    showBubble('Kumusta! Gaano katagal mag-study ka ngayon?');
-  });
-
-  // keyboard interaction (Enter / Space)
-  wrap.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      showBubble('Nice! Let\'s organise your tasks.');
-    }
-  });
-
-  // also allow bubble to hide when clicked
-  bubble.addEventListener('click', () => {
-    bubble.classList.remove('in-view');
-    bubble.hidden = true;
-    if (hideTimer) clearTimeout(hideTimer);
-  });
-})();
-
-/* ---------- Small UI quick handlers (kept + improved) ---------- */
-/* "Get Started" button scroll to hero CTA */
-const getStarted = document.getElementById('getStarted');
-if (getStarted) {
-  getStarted.addEventListener('click', () => {
-    const el = document.querySelector('.poster');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-}
-const learnMore = document.getElementById('learnMore');
-if (learnMore) {
-  learnMore.addEventListener('click', () => {
-    const el = document.querySelector('#features');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-}
-
-/* ---------- Accessibility: keyboard for theme toggle ---------- */
-(function(){
-  const toggle = document.getElementById('themeToggle');
-  if (!toggle) return;
-  toggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggle.click();
-    }
-  });
-})();
-
-// Mobile menu toggle
-const menuToggle = document.getElementById("menuToggle");
-const headerNav = document.querySelector(".header-nav");
-
-menuToggle.addEventListener("click", () => {
-  headerNav.classList.toggle("active");
-});
-
-// Toggle Sign In / Sign Up
-document.addEventListener('DOMContentLoaded', () => {
-  const formToggle = document.getElementById('formToggle');
-  const signInBtn = document.getElementById('signInBtn');
-  const signUpBtn = document.getElementById('signUpBtn');
-  const signInForm = document.getElementById('signInForm');
-  const signUpForm = document.getElementById('signUpForm');
-
-  if (!formToggle || !signInBtn || !signUpBtn || !signInForm || !signUpForm) {
-    console.warn('Sign In / Sign Up elements missing!');
-    return;
-  }
-
-  signInBtn.addEventListener('click', () => {
-    formToggle.classList.remove('sign-up-active');
-    signInBtn.classList.add('active');
-    signUpBtn.classList.remove('active');
-    signInForm.classList.remove('hidden');
-    signUpForm.classList.add('hidden');
-  });
-
-  signUpBtn.addEventListener('click', () => {
-    formToggle.classList.add('sign-up-active');
-    signUpBtn.classList.add('active');
-    signInBtn.classList.remove('active');
-    signUpForm.classList.remove('hidden');
-    signInForm.classList.add('hidden');
-  });
-});
-
-// 🟦 Wato Chat Bubble Interactions
+// 🟦 Wato Chat Bubble Interactions (fixed + animated)
 const watoLogo = document.querySelector('.header-left img');
-const headerLeft = document.querySelector('.header-left');
+const brandWrap = document.querySelector('.header-brand-wrap');
 const headerBubble = document.getElementById('headerBubble');
 
-// Conversation lines
-const watoMessages = [
-  "Hi, I’m Wato 👋 Need a boost today?",
-  "You’re doing great — don’t rush yourself ⏳",
-  "Take a breath. Even heroes need breaks 💫",
-  "What’s one small win you can do today? 💭"
-];
+if (watoLogo && brandWrap && headerBubble) {
+  const messages = [
+    "Hi, I’m Wato 👋 Need a boost today?",
+    "You’re doing great — don’t rush yourself ⏳",
+    "Take a breath. Even heroes need breaks 💫",
+    "What’s one small win you can do today? 💭"
+  ];
 
-let clickCount = 0;
+  let clickCount = 0;
+  let isBubbleVisible = false;
 
-watoLogo.addEventListener('click', () => {
-  clickCount++;
+  watoLogo.addEventListener('click', () => {
+    clickCount++;
 
-  // Activate chat bubble
-  headerLeft.classList.add('fade-out');
-  headerBubble.hidden = false;
-  headerBubble.classList.add('active');
+    // Hide brand + tagline
+    brandWrap.classList.add('fade-out');
+    setTimeout(() => {
+      brandWrap.style.display = 'none';
+      headerBubble.hidden = false;
+      headerBubble.classList.add('fade-in');
 
-  // Cycle messages
-  const messageIndex = (clickCount - 1) % watoMessages.length;
-  headerBubble.textContent = watoMessages[messageIndex];
+      // Cycle through messages
+      const messageIndex = (clickCount - 1) % messages.length;
+      headerBubble.textContent = messages[messageIndex];
 
-  // Optional: after several clicks, reset
-  if (clickCount >= watoMessages.length) clickCount = 0;
-});
+      isBubbleVisible = true;
+
+      // Reset click count if exceeded
+      if (clickCount >= messages.length) clickCount = 0;
+    }, 400); // matches fade-out duration
+  });
+}
+
 
 
 
