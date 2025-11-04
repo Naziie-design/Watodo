@@ -29,11 +29,12 @@
     </div>
   </div>
 
+  <!-- bubble placeholder -->
   <div id="headerBubble" class="header-bubble" role="status" aria-live="polite" hidden>
     Hi, I’m Wato 👋 Need a boost today?
   </div>
-</header>
-  
+
+  <!-- navigation (kept inside header) -->
   <nav class="header-nav" aria-label="Main navigation">
     <a href="#home">Home</a>
     <a href="#features">Features</a>
@@ -41,21 +42,23 @@
     <a href="#why">Why Watodo</a>
     <a href="#contact">Contact</a>
   </nav>
-   
-<div class="form-toggle" id="formToggle">
-  <button id="signInBtn" class="active">Sign In</button>
-  <button id="signUpBtn">Sign Up</button>
-</div>
 
-<!-- Example form placeholders -->
-<form id="signInForm">
-  <!-- Sign In form fields here -->
-</form>
+  <!-- sign in / sign up toggle -->
+  <div class="form-toggle" id="formToggle">
+    <button id="signInBtn" class="active">Sign In</button>
+    <button id="signUpBtn">Sign Up</button>
+  </div>
 
-<form id="signUpForm" class="hidden">
-  <!-- Sign Up form fields here -->
-</form>
-   
+  <!-- Example form placeholders (kept as siblings in header layout) -->
+  <form id="signInForm" aria-hidden="true">
+    <!-- Sign In form fields here -->
+  </form>
+
+  <form id="signUpForm" class="hidden" aria-hidden="true">
+    <!-- Sign Up form fields here -->
+  </form>
+
+  <!-- header-right (theme toggle + menu) -->
   <div class="header-right">
     <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌞</button>
     <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
@@ -184,6 +187,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
