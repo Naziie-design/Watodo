@@ -292,4 +292,37 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// 🟦 Wato Chat Bubble Interactions
+const watoLogo = document.querySelector('.header-left img');
+const headerLeft = document.querySelector('.header-left');
+const headerBubble = document.getElementById('headerBubble');
+
+// Conversation lines
+const watoMessages = [
+  "Hi, I’m Wato 👋 Need a boost today?",
+  "You’re doing great — don’t rush yourself ⏳",
+  "Take a breath. Even heroes need breaks 💫",
+  "What’s one small win you can do today? 💭"
+];
+
+let clickCount = 0;
+
+watoLogo.addEventListener('click', () => {
+  clickCount++;
+
+  // Activate chat bubble
+  headerLeft.classList.add('fade-out');
+  headerBubble.hidden = false;
+  headerBubble.classList.add('active');
+
+  // Cycle messages
+  const messageIndex = (clickCount - 1) % watoMessages.length;
+  headerBubble.textContent = watoMessages[messageIndex];
+
+  // Optional: after several clicks, reset
+  if (clickCount >= watoMessages.length) clickCount = 0;
+});
+
+
+
 
