@@ -809,6 +809,57 @@ header {
   transform: scale(1.05);
 }
 
+/* 🟦 Wato Chat Bubble Styles */
+.header-bubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 240px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 99;
+}
+
+/* Bubble visible + bounce */
+.header-bubble.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+  pointer-events: auto;
+  animation: watoBounce 0.25s ease;
+}
+
+/* Fade out header texts and logo smoothly */
+.header-left.fade-out .header-brand-wrap,
+.header-left.fade-out img {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Restore them when inactive */
+.header-left .header-brand-wrap,
+.header-left img {
+  transition: opacity 0.4s ease;
+}
+
+/* Bounce animation */
+@keyframes watoBounce {
+  0% { transform: translate(-50%, -50%) scale(0.9); }
+  60% { transform: translate(-50%, -50%) scale(1.08); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+
+
 
 
 
