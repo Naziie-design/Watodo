@@ -184,14 +184,14 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-// --- Wato Chat Toggle ---
-const watoLogo = document.querySelector('.header-left img');
+// --- Wato Chat Toggle (fixed version) ---
+const watoRobot = document.querySelector('.header-right img[src*="robot"]'); // target robot.png only
 const headerBubble = document.getElementById('headerBubble');
 const headerLeft = document.querySelector('.header-left');
 const headerNav = document.querySelector('.header-nav');
 const headerRight = document.querySelector('.header-right');
 
-if (watoLogo && headerBubble) {
+if (watoRobot && headerBubble) {
   const watoChats = [
     "Hi, I’m Wato 👋 Need a boost today?",
     "You're doing great! How’s your focus?",
@@ -201,23 +201,39 @@ if (watoLogo && headerBubble) {
   let chatIndex = 0;
   let showingChat = false;
 
-  watoLogo.addEventListener('click', () => {
+  watoRobot.addEventListener('click', () => {
     if (!showingChat) {
+      // Fade out header elements
       headerLeft.classList.add('fade-out');
       headerNav.classList.add('fade-out');
       headerRight.classList.add('fade-out');
+
+      // After fade-out, show the bubble
       setTimeout(() => {
         headerBubble.textContent = watoChats[chatIndex];
         headerBubble.hidden = false;
         headerBubble.classList.add('active');
-      }, 300);
+      }, 400);
     } else {
+      // If already showing, go to next message OR hide
       chatIndex = (chatIndex + 1) % watoChats.length;
-      headerBubble.textContent = watoChats[chatIndex];
+
+      // When it loops back to first message, fade everything back in
+      if (chatIndex === 0) {
+        headerBubble.classList.remove('active');
+        setTimeout(() => {
+          headerLeft.classList.remove('fade-out');
+          headerNav.classList.remove('fade-out');
+          headerRight.classList.remove('fade-out');
+        }, 400);
+      } else {
+        headerBubble.textContent = watoChats[chatIndex];
+      }
     }
     showingChat = true;
   });
 }
+
 
 
 
