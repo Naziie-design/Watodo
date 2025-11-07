@@ -184,44 +184,40 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-// 🟦 Wato Chat Bubble Interactions (fixed + animated)
+// --- Wato Chat Toggle ---
 const watoLogo = document.querySelector('.header-left img');
-const brandWrap = document.querySelector('.header-brand-wrap');
 const headerBubble = document.getElementById('headerBubble');
+const headerLeft = document.querySelector('.header-left');
+const headerNav = document.querySelector('.header-nav');
+const headerRight = document.querySelector('.header-right');
 
-if (watoLogo && brandWrap && headerBubble) {
-  const messages = [
+if (watoLogo && headerBubble) {
+  const watoChats = [
     "Hi, I’m Wato 👋 Need a boost today?",
-    "You’re doing great — don’t rush yourself ⏳",
-    "Take a breath. Even heroes need breaks 💫",
-    "What’s one small win you can do today? 💭"
+    "You're doing great! How’s your focus?",
+    "I can help you plan your next task 💡",
+    "Stay hydrated and take a quick break ☕"
   ];
-
-  let clickCount = 0;
-  let isBubbleVisible = false;
+  let chatIndex = 0;
+  let showingChat = false;
 
   watoLogo.addEventListener('click', () => {
-    clickCount++;
-
-    // Hide brand + tagline
-    brandWrap.classList.add('fade-out');
-    setTimeout(() => {
-      brandWrap.style.display = 'none';
-      headerBubble.hidden = false;
-      headerBubble.classList.add('fade-in');
-
-      // Cycle through messages
-      const messageIndex = (clickCount - 1) % messages.length;
-      headerBubble.textContent = messages[messageIndex];
-
-      isBubbleVisible = true;
-
-      // Reset click count if exceeded
-      if (clickCount >= messages.length) clickCount = 0;
-    }, 400); // matches fade-out duration
+    if (!showingChat) {
+      headerLeft.classList.add('fade-out');
+      headerNav.classList.add('fade-out');
+      headerRight.classList.add('fade-out');
+      setTimeout(() => {
+        headerBubble.textContent = watoChats[chatIndex];
+        headerBubble.hidden = false;
+        headerBubble.classList.add('active');
+      }, 300);
+    } else {
+      chatIndex = (chatIndex + 1) % watoChats.length;
+      headerBubble.textContent = watoChats[chatIndex];
+    }
+    showingChat = true;
   });
 }
-
 
 
 
