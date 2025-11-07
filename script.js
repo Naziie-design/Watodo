@@ -184,55 +184,46 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-// --- Wato Chat Toggle (fixed version) ---
-const watoRobot = document.querySelector('.header-right img[src*="robot"]'); // target robot.png only
-const headerBubble = document.getElementById('headerBubble');
-const headerLeft = document.querySelector('.header-left');
-const headerNav = document.querySelector('.header-nav');
-const headerRight = document.querySelector('.header-right');
+// === Wato Robot Chat Bubble Fix v2 ===
+document.addEventListener("DOMContentLoaded", () => {
+  const robot = document.getElementById("robot");
+  const headerBubble = document.getElementById("headerBubble");
+  const headerSections = document.querySelectorAll(".header-left, .header-nav, .header-right");
 
-if (watoRobot && headerBubble) {
-  const watoChats = [
-    "Hi, I’m Wato 👋 Need a boost today?",
-    "You're doing great! How’s your focus?",
-    "I can help you plan your next task 💡",
-    "Stay hydrated and take a quick break ☕"
-  ];
-  let chatIndex = 0;
+  if (!robot || !headerBubble) {
+    console.warn("Wato elements missing. Check HTML IDs for robot or headerBubble.");
+    return;
+  }
+
   let showingChat = false;
+  const watoMessages = [
+    "Hi, I'm Wato 👋 Need a boost today?",
+    "You're doing great!",
+    "Take a short break ☕",
+    "Let's get things done 💪"
+  ];
+  let messageIndex = 0;
 
-  watoRobot.addEventListener('click', () => {
+  robot.addEventListener("click", () => {
+    console.log("🤖 Wato clicked!");
     if (!showingChat) {
-      // Fade out header elements
-      headerLeft.classList.add('fade-out');
-      headerNav.classList.add('fade-out');
-      headerRight.classList.add('fade-out');
-
-      // After fade-out, show the bubble
+      // Fade out header
+      headerSections.forEach(el => el.classList.add("fade-out"));
       setTimeout(() => {
-        headerBubble.textContent = watoChats[chatIndex];
-        headerBubble.hidden = false;
-        headerBubble.classList.add('active');
-      }, 400);
+        headerBubble.classList.add("active");
+        headerBubble.style.opacity = 1;
+        headerBubble.textContent = watoMessages[messageIndex];
+      }, 400); // match fade-out duration in CSS
+      showingChat = true;
     } else {
-      // If already showing, go to next message OR hide
-      chatIndex = (chatIndex + 1) % watoChats.length;
-
-      // When it loops back to first message, fade everything back in
-      if (chatIndex === 0) {
-        headerBubble.classList.remove('active');
-        setTimeout(() => {
-          headerLeft.classList.remove('fade-out');
-          headerNav.classList.remove('fade-out');
-          headerRight.classList.remove('fade-out');
-        }, 400);
-      } else {
-        headerBubble.textContent = watoChats[chatIndex];
-      }
+      // Cycle through messages
+      messageIndex = (messageIndex + 1) % watoMessages.length;
+      headerBubble.textContent = watoMessages[messageIndex];
     }
-    showingChat = true;
   });
-}
+});
+
+
 
 
 
