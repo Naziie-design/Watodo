@@ -184,6 +184,56 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
+// --- Wato Chat Toggle (fixed version) ---
+const watoRobot = document.querySelector('.header-right img[src*="robot"]'); // target robot.png only
+const headerBubble = document.getElementById('headerBubble');
+const headerLeft = document.querySelector('.header-left');
+const headerNav = document.querySelector('.header-nav');
+const headerRight = document.querySelector('.header-right');
+
+if (watoRobot && headerBubble) {
+  const watoChats = [
+    "Hi, I’m Wato 👋 Need a boost today?",
+    "You're doing great! How’s your focus?",
+    "I can help you plan your next task 💡",
+    "Stay hydrated and take a quick break ☕"
+  ];
+  let chatIndex = 0;
+  let showingChat = false;
+
+  watoRobot.addEventListener('click', () => {
+    if (!showingChat) {
+      // Fade out header elements
+      headerLeft.classList.add('fade-out');
+      headerNav.classList.add('fade-out');
+      headerRight.classList.add('fade-out');
+
+      // After fade-out, show the bubble
+      setTimeout(() => {
+        headerBubble.textContent = watoChats[chatIndex];
+        headerBubble.hidden = false;
+        headerBubble.classList.add('active');
+      }, 400);
+    } else {
+      // If already showing, go to next message OR hide
+      chatIndex = (chatIndex + 1) % watoChats.length;
+
+      // When it loops back to first message, fade everything back in
+      if (chatIndex === 0) {
+        headerBubble.classList.remove('active');
+        setTimeout(() => {
+          headerLeft.classList.remove('fade-out');
+          headerNav.classList.remove('fade-out');
+          headerRight.classList.remove('fade-out');
+        }, 400);
+      } else {
+        headerBubble.textContent = watoChats[chatIndex];
+      }
+    }
+    showingChat = true;
+  });
+}
+
 // === Wato Robot Chat Bubble Fix v2 ===
 document.addEventListener("DOMContentLoaded", () => {
   const robot = document.getElementById("robot");
@@ -204,24 +254,28 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   let messageIndex = 0;
 
-  robot.addEventListener("click", () => {
-    console.log("🤖 Wato clicked!");
-    if (!showingChat) {
-      // Fade out header
-      headerSections.forEach(el => el.classList.add("fade-out"));
-      setTimeout(() => {
-        headerBubble.classList.add("active");
-        headerBubble.style.opacity = 1;
-        headerBubble.textContent = watoMessages[messageIndex];
-      }, 400); // match fade-out duration in CSS
-      showingChat = true;
-    } else {
-      // Cycle through messages
-      messageIndex = (messageIndex + 1) % watoMessages.length;
+robot.addEventListener("click", (e) => {
+  e.stopImmediatePropagation(); // ✅ avoids conflict with old listener
+  console.log("🤖 Wato clicked!");
+  
+  if (!showingChat) {
+    // Fade out header
+    headerSections.forEach(el => el.classList.add("fade-out"));
+    setTimeout(() => {
+      headerBubble.classList.add("active");
+      headerBubble.style.opacity = 1;
       headerBubble.textContent = watoMessages[messageIndex];
-    }
-  });
+    }, 400); // match fade-out duration in CSS
+    showingChat = true;
+  } else {
+    // Cycle through messages
+    messageIndex = (messageIndex + 1) % watoMessages.length;
+    headerBubble.textContent = watoMessages[messageIndex];
+  }
 });
+});
+
+
 
 
 
