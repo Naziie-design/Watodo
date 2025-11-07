@@ -809,32 +809,45 @@ header {
   transform: scale(1.05);
 }
 
-/* 🟦 Wato Bubble + Brand Fade Animations */
-.header-brand-wrap.fade-out {
-  opacity: 0;
-  transform: translateY(-5px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
+/* --- Wato Bubble (fixed, not breaking layout) --- */
 .header-bubble {
+  position: absolute;
+  top: 60px; /* adjust kung gusto mo mas baba */
+  left: 90px; /* align sa logo */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #222;
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  text-align: center;
-  background: var(--bubble-bg, #fff);
-  color: var(--bubble-color, #111);
-  padding: 8px 14px;
-  border-radius: 18px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-  display: inline-block;
-  max-width: 220px;
-  margin-top: 6px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-.header-bubble.fade-in {
+.header-bubble.active {
   opacity: 1;
-  transform: scale(1);
+  pointer-events: auto;
 }
+
+.header-left.fade-out,
+.header-nav.fade-out,
+.header-right.fade-out {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.header-left.fade-in,
+.header-nav.fade-in,
+.header-right.fade-in {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
 
 
 
