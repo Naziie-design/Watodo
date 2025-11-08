@@ -875,6 +875,20 @@ header {
   }
 }
 
+/* make header the positioning context for absolute bubble */
+.site-header {
+  position: relative;
+  z-index: 1100; /* ensure header above page content */
+}
+
+/* ensure inline message sits above other content on mobile */
+.wato-message {
+  position: relative;
+  z-index: 2000;
+}
+
+
+
 
 
 
