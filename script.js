@@ -234,10 +234,11 @@ if (watoRobot && headerBubble) {
   });
 }
 
-// === Wato Robot Chat Bubble Fix v2 ===
+// === Wato Robot Chat Bubble Fix v3 (Desktop + Mobile) ===
 document.addEventListener("DOMContentLoaded", () => {
   const robot = document.getElementById("robot");
   const headerBubble = document.getElementById("headerBubble");
+  const watoMessage = document.getElementById("watoMessage");
   const headerSections = document.querySelectorAll(".header-left, .header-nav, .header-right");
 
   if (!robot || !headerBubble) {
@@ -254,26 +255,46 @@ document.addEventListener("DOMContentLoaded", () => {
   ];
   let messageIndex = 0;
 
-robot.addEventListener("click", (e) => {
-  e.stopImmediatePropagation(); // ✅ avoids conflict with old listener
-  console.log("🤖 Wato clicked!");
+  robot.addEventListener("click", (e) => {
+    e.stopImmediatePropagation(); // avoid conflict with old listener
+    console.log("🤖 Wato clicked!");
   
-  if (!showingChat) {
-    // Fade out header
-    headerSections.forEach(el => el.classList.add("fade-out"));
-    setTimeout(() => {
-      headerBubble.classList.add("active");
-      headerBubble.style.opacity = 1;
-      headerBubble.textContent = watoMessages[messageIndex];
-    }, 400); // match fade-out duration in CSS
-    showingChat = true;
-  } else {
-    // Cycle through messages
-    messageIndex = (messageIndex + 1) % watoMessages.length;
-    headerBubble.textContent = watoMessages[messageIndex];
-  }
+    if (!showingChat) {
+      // Fade out header
+      headerSections.forEach(el => el.classList.add("fade-out"));
+
+      setTimeout(() => {
+        if (window.innerWidth <= 768) { 
+          // ✅ Mobile: inline header message
+          headerBubble.classList.remove("active"); // hide bubble version
+          watoMessage.classList.add("active");
+          watoMessage.textContent = watoMessages[messageIndex];
+        } else {
+          // 💻 Desktop: floating chat bubble
+          headerBubble.classList.add("active");
+          headerBubble.style.opacity = 1;
+          headerBubble.textContent = watoMessages[messageIndex];
+        }
+      }, 400); // match fade-out duration in CSS
+
+      showingChat = true;
+
+    } else {
+      // Cycle through messages
+      messageIndex = (messageIndex + 1) % watoMessages.length;
+
+      if (window.innerWidth <= 768) {
+        // ✅ Mobile update
+        watoMessage.textContent = watoMessages[messageIndex];
+      } else {
+        // 💻 Desktop update
+        headerBubble.textContent = watoMessages[messageIndex];
+      }
+    }
+  });
 });
-});
+
+
 
 
 
