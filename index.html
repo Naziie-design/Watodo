@@ -28,12 +28,11 @@
       <div class="tag">Automate your day. Simplify your decisions.</div>
     </div>
   </div>
-  
-<!-- 📱 Inline Wato message (for mobile view only) -->
-<!-- This appears below the header when robot is tapped -->
-<div class="wato-message" role="status" aria-live="polite">
-  Hi, I’m Wato 👋 Need a boost today?
-</div>
+
+  <!-- 💬 Bubble placeholder for desktop -->
+  <div id="headerBubble" class="header-bubble" role="status" aria-live="polite">
+    Hi, I’m Wato 👋 Need a boost today?
+  </div>
 
   <!-- navigation (kept inside header) -->
   <nav class="header-nav" aria-label="Main navigation">
@@ -43,6 +42,13 @@
     <a href="#why">Why Watodo</a>
     <a href="#contact">Contact</a>
   </nav>
+</header>
+
+<!-- 📱 Inline Wato message (for mobile view only) -->
+<!-- Appears below header when robot is tapped -->
+<div class="wato-message" role="status" aria-live="polite">
+  Hi, I’m Wato 👋 Need a boost today?
+</div>
 
   <!-- sign in / sign up toggle -->
   <div class="form-toggle" id="formToggle">
@@ -188,6 +194,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
