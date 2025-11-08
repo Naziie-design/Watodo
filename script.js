@@ -234,7 +234,7 @@ if (watoRobot && headerBubble) {
   });
 }
 
-// === Wato Robot Chat Bubble Fix v3 (Desktop + Mobile) ===
+// === Wato Robot Chat Bubble Fix v3.1 (Desktop + Mobile) ===
 document.addEventListener("DOMContentLoaded", () => {
   const robot = document.getElementById("robot");
   const headerBubble = document.getElementById("headerBubble");
@@ -247,6 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let showingChat = false;
+  let watoTimeout; // <-- added here
+
   const watoMessages = [
     "Hi, I'm Wato 👋 Need a boost today?",
     "You're doing great!",
@@ -256,45 +258,48 @@ document.addEventListener("DOMContentLoaded", () => {
   let messageIndex = 0;
 
   robot.addEventListener("click", (e) => {
-    e.stopImmediatePropagation(); // avoid conflict with old listener
+    e.stopImmediatePropagation();
     console.log("🤖 Wato clicked!");
-  
+
     if (!showingChat) {
       // Fade out header
       headerSections.forEach(el => el.classList.add("fade-out"));
 
+      // Wait for header fade-out to finish before showing message
       setTimeout(() => {
-        if (window.innerWidth <= 768) { 
-          // ✅ Mobile: inline header message
-          headerBubble.classList.remove("active"); // hide bubble version
+        if (window.innerWidth <= 768) {
+          // 📱 MOBILE MODE
+          headerBubble.classList.remove("active");
           watoMessage.classList.add("active");
           watoMessage.textContent = watoMessages[messageIndex];
+
+          // 🕒 Auto-hide message after 4s (fade out only)
+          clearTimeout(watoTimeout);
+          watoTimeout = setTimeout(() => {
+            watoMessage.classList.remove("active");
+            // 👇 Optional: bring header back after message fades out
+            headerSections.forEach(el => el.classList.remove("fade-out"));
+            headerSections.forEach(el => el.classList.add("fade-in"));
+          }, 4000);
         } else {
-          // 💻 Desktop: floating chat bubble
+          // 💻 DESKTOP MODE
           headerBubble.classList.add("active");
-          headerBubble.style.opacity = 1;
           headerBubble.textContent = watoMessages[messageIndex];
         }
-      }, 400); // match fade-out duration in CSS
-
+      }, 450); // wait for fade-out
       showingChat = true;
-
     } else {
-      // Cycle through messages
+      // Next message cycle
       messageIndex = (messageIndex + 1) % watoMessages.length;
 
       if (window.innerWidth <= 768) {
-        // ✅ Mobile update
         watoMessage.textContent = watoMessages[messageIndex];
       } else {
-        // 💻 Desktop update
         headerBubble.textContent = watoMessages[messageIndex];
       }
     }
   });
 });
-
-
 
 
 
