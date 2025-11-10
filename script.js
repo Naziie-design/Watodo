@@ -184,7 +184,6 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-<script>
 /* === Wato Robot Chat Bubble v3.3 (Unified Desktop + Mobile) === */
 /* Author: Team Leader & GPT-5 | Watodo v3.0 */
 
@@ -349,6 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
