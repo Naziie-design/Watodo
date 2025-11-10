@@ -864,6 +864,10 @@ header {
   max-width: 90%;
   line-height: 1.4;
   visibility: hidden;
+
+  /* ensure the inline message sits above other content on mobile */
+  position: relative;
+  z-index: 2000;
 }
 
 @media (max-width: 768px) {
@@ -885,6 +889,92 @@ header {
 .wato-message {
   position: relative;
   z-index: 2000;
+}
+
+/* ---------- Wato runtime UI (overlay + bubble) ---------- */
+
+/* Mobile overlay (announcement-like, sits visually inside header area) */
+.wato-overlay {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  top: 0;
+  min-height: 48px;           /* adjust to match your header height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.98);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  font-size: 1rem;            /* readable announcement size */
+  font-weight: 600;
+  color: #222;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.28s ease, visibility 0.2s;
+  z-index: 2200;              /* above header and content */
+  max-width: 96%;
+}
+
+/* visible state */
+.wato-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Desktop floating bubble (positioned near robot via JS) */
+.wato-bubble {
+  position: absolute;          /* JS computes left/top relative to viewport (body) */
+  transform-origin: left center;
+  transform: translateY(-6px) scale(0.98);
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(6px);
+  padding: 8px 12px;
+  border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #222;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.22s ease;
+  z-index: 2200;
+  white-space: nowrap;
+}
+
+/* visible bubble */
+.wato-bubble.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* small pointer triangle for bubble (pure CSS) */
+.wato-bubble::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: rgba(255,255,255,0.98);
+  transform: rotate(45deg);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.03);
+  left: -6px; /* JS will flip or adjust as needed */
+  top: 50%;
+  transform-origin: center;
+  display: none; /* enabled by JS if you want the pointer visible */
+}
+
+/* small accessibility: prefer reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .wato-overlay,
+  .wato-bubble {
+    transition: none !important;
+  }
 }
 
 
