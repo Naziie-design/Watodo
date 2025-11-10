@@ -347,7 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
     robot.removeEventListener("click", this);
   });
 });
-</script>
+
 
 
 
