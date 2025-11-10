@@ -184,128 +184,172 @@ if (remindBtn) remindBtn.addEventListener('click', showPopup); // no-op if null
   });
 })();
 
-// --- Wato Chat Toggle (fixed version) ---
-const watoRobot = document.querySelector('.header-right img[src*="robot"]'); // target robot.png only
-const headerBubble = document.getElementById('headerBubble');
-const headerLeft = document.querySelector('.header-left');
-const headerNav = document.querySelector('.header-nav');
-const headerRight = document.querySelector('.header-right');
+<script>
+/* === Wato Robot Chat Bubble v3.3 (Unified Desktop + Mobile) === */
+/* Author: Team Leader & GPT-5 | Watodo v3.0 */
 
-if (watoRobot && headerBubble) {
-  const watoChats = [
-    "Hi, I’m Wato 👋 Need a boost today?",
-    "You're doing great! How’s your focus?",
-    "I can help you plan your next task 💡",
-    "Stay hydrated and take a quick break ☕"
-  ];
-  let chatIndex = 0;
-  let showingChat = false;
-
-  watoRobot.addEventListener('click', () => {
-    if (!showingChat) {
-      // Fade out header elements
-      headerLeft.classList.add('fade-out');
-      headerNav.classList.add('fade-out');
-      headerRight.classList.add('fade-out');
-
-      // After fade-out, show the bubble
-      setTimeout(() => {
-        headerBubble.textContent = watoChats[chatIndex];
-        headerBubble.hidden = false;
-        headerBubble.classList.add('active');
-      }, 400);
-    } else {
-      // If already showing, go to next message OR hide
-      chatIndex = (chatIndex + 1) % watoChats.length;
-
-      // When it loops back to first message, fade everything back in
-      if (chatIndex === 0) {
-        headerBubble.classList.remove('active');
-        setTimeout(() => {
-          headerLeft.classList.remove('fade-out');
-          headerNav.classList.remove('fade-out');
-          headerRight.classList.remove('fade-out');
-        }, 400);
-      } else {
-        headerBubble.textContent = watoChats[chatIndex];
-      }
-    }
-    showingChat = true;
-  });
-}
-
-// === Wato Robot Chat Bubble Fix v3.2 (Desktop + Mobile) ===
 document.addEventListener("DOMContentLoaded", () => {
-  const robot = document.getElementById("robot");
-  const headerBubble = document.getElementById("headerBubble");
-  const watoMessage = document.getElementById("watoMessage");
+  const robot = document.querySelector("#robot, .robot, [data-wato-robot]");
+  const header = document.querySelector("header");
   const headerSections = document.querySelectorAll(".header-left, .header-nav, .header-right");
 
-  // Strict check: require robot + headerBubble + watoMessage
-  if (!robot || !headerBubble || !watoMessage) {
-    console.warn("Wato setup missing elements:", { robot: !!robot, headerBubble: !!headerBubble, watoMessage: !!watoMessage });
+  if (!robot) {
+    console.warn("⚠️ Wato: robot element not found (use id='robot' or class='robot').");
     return;
   }
 
-  let showingChat = false;
-  let watoTimeout;
-
-  const watoMessages = [
+  const messages = [
     "Hi, I'm Wato 👋 Need a boost today?",
     "You're doing great!",
     "Take a short break ☕",
     "Let's get things done 💪"
   ];
-  let messageIndex = 0;
+  let index = 0;
+  let showing = false;
+  let autoHideTimer = null;
 
-  // optional small helper to restore header classes safely
-  function restoreHeader() {
-    headerSections.forEach(el => {
-      el.classList.remove("fade-out");
-      el.classList.add("fade-in");
-    });
+  // === create floating UI elements ===
+  const overlay = document.createElement("div");
+  overlay.className = "wato-overlay";
+  overlay.setAttribute("role", "status");
+  overlay.setAttribute("aria-live", "polite");
+  overlay.textContent = messages[0];
+
+  const bubble = document.createElement("div");
+  bubble.className = "wato-bubble";
+  bubble.setAttribute("role", "status");
+  bubble.setAttribute("aria-live", "polite");
+  bubble.textContent = messages[0];
+
+  document.body.appendChild(overlay);
+  document.body.appendChild(bubble);
+
+  // === helper functions ===
+  function fadeOutHeader() {
+    if (headerSections.length) {
+      headerSections.forEach(el => el.classList.add("fade-out"));
+      headerSections.forEach(el => el.classList.remove("fade-in"));
+    } else if (header) {
+      header.classList.add("fade-out");
+      header.classList.remove("fade-in");
+    }
   }
 
+  function restoreHeader() {
+    if (headerSections.length) {
+      headerSections.forEach(el => {
+        el.classList.remove("fade-out");
+        el.classList.add("fade-in");
+      });
+    } else if (header) {
+      header.classList.remove("fade-out");
+      header.classList.add("fade-in");
+    }
+  }
+
+  function clearAutoHide() {
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer);
+      autoHideTimer = null;
+    }
+  }
+
+  function showOverlay(msg) {
+    overlay.textContent = msg;
+    const headerRect = header ? header.getBoundingClientRect() : { top: 0, height: 56 };
+    overlay.style.top = Math.max(0, headerRect.top) + "px";
+    overlay.classList.add("active");
+  }
+
+  function hideOverlay() {
+    overlay.classList.remove("active");
+  }
+
+  function showBubble(msg) {
+    bubble.textContent = msg;
+    const r = robot.getBoundingClientRect();
+
+    const preferLeft = (window.innerWidth - r.right) < r.left;
+    let top = Math.max(6, r.top - 8);
+    let left;
+
+    if (preferLeft) {
+      left = r.left - bubble.offsetWidth - 12;
+      if (left < 8) left = r.right + 8;
+    } else {
+      left = r.right + 8;
+      if (left + bubble.offsetWidth > window.innerWidth - 8) {
+        left = r.left - bubble.offsetWidth - 12;
+      }
+    }
+
+    bubble.style.top = top + window.scrollY + "px";
+    bubble.style.left = left + window.scrollX + "px";
+    bubble.classList.add("active");
+  }
+
+  function hideBubble() {
+    bubble.classList.remove("active");
+  }
+
+  // === main trigger ===
   robot.addEventListener("click", (e) => {
     e.stopImmediatePropagation();
-    console.log("🤖 Wato clicked! innerWidth:", window.innerWidth, "messageIndex:", messageIndex);
+    clearAutoHide();
 
-    if (!showingChat) {
-      // Fade out header sections (if found)
-      headerSections.forEach(el => el.classList.add("fade-out"));
-
-      // Wait for header fade-out to finish before showing message
+    if (!showing) {
+      fadeOutHeader();
       setTimeout(() => {
+        const msg = messages[index];
         if (window.innerWidth <= 768) {
-          // MOBILE MODE
-          headerBubble.classList.remove("active"); // ensure desktop bubble hidden
-          watoMessage.classList.add("active");
-          watoMessage.textContent = watoMessages[messageIndex];
-
-          // Auto-hide after 4s and restore header
-          clearTimeout(watoTimeout);
-          watoTimeout = setTimeout(() => {
-            watoMessage.classList.remove("active");
+          showOverlay(msg);
+          autoHideTimer = setTimeout(() => {
+            hideOverlay();
             restoreHeader();
+            showing = false;
           }, 4000);
         } else {
-          // DESKTOP MODE: show bubble
-          headerBubble.classList.add("active");
-          headerBubble.textContent = watoMessages[messageIndex];
+          showBubble(msg);
         }
-      }, 450); // wait for fade-out to finish
-      showingChat = true;
+      }, 400);
+      showing = true;
     } else {
-      // Cycle messages
-      messageIndex = (messageIndex + 1) % watoMessages.length;
+      index = (index + 1) % messages.length;
+      const nextMsg = messages[index];
       if (window.innerWidth <= 768) {
-        watoMessage.textContent = watoMessages[messageIndex];
+        overlay.textContent = nextMsg;
+        clearAutoHide();
+        autoHideTimer = setTimeout(() => {
+          hideOverlay();
+          restoreHeader();
+          showing = false;
+        }, 4000);
       } else {
-        headerBubble.textContent = watoMessages[messageIndex];
+        showBubble(nextMsg);
       }
     }
   });
+
+  // === responsive + cleanup ===
+  window.addEventListener("resize", () => {
+    if (overlay.classList.contains("active")) {
+      hideOverlay();
+      restoreHeader();
+      showing = false;
+      clearAutoHide();
+    }
+    if (bubble.classList.contains("active") && window.innerWidth > 768) {
+      setTimeout(() => showBubble(bubble.textContent), 120);
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    clearAutoHide();
+    robot.removeEventListener("click", this);
+  });
 });
+</script>
+
 
 
 
