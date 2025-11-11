@@ -264,9 +264,10 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.classList.remove("active");
   }
 
-function showBubble(msg) {
+ function showBubble(msg) {
   bubble.textContent = msg;
   const r = robot.getBoundingClientRect();
+
   const preferLeft = (window.innerWidth - r.right) < r.left;
   let top = Math.max(6, r.top - 8);
   let left;
@@ -285,18 +286,75 @@ function showBubble(msg) {
   bubble.style.left = left + window.scrollX + "px";
   bubble.classList.add("active");
 
-  // ✅ prevent double scrollbar while visible
-  document.body.classList.add("wato-lock");
+  // ✅ disable page scroll while bubble is visible
+  document.documentElement.style.overflow = "hidden";
 }
 
 function hideBubble() {
   bubble.classList.remove("active");
 
-  // ✅ re-enable scroll once hidden
-  document.body.classList.remove("wato-lock");
+  // ✅ re-enable page scroll once hidden
+  document.documentElement.style.overflow = "";
 }
 
-}); // ← closes DOMContentLoaded event
+  // === main trigger ===
+  robot.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
+    clearAutoHide();
+
+    if (!showing) {
+      fadeOutHeader();
+      setTimeout(() => {
+        const msg = messages[index];
+        if (window.innerWidth <= 768) {
+          showOverlay(msg);
+          autoHideTimer = setTimeout(() => {
+            hideOverlay();
+            restoreHeader();
+            showing = false;
+          }, 4000);
+        } else {
+          showBubble(msg);
+        }
+      }, 400);
+      showing = true;
+    } else {
+      index = (index + 1) % messages.length;
+      const nextMsg = messages[index];
+      if (window.innerWidth <= 768) {
+        overlay.textContent = nextMsg;
+        clearAutoHide();
+        autoHideTimer = setTimeout(() => {
+          hideOverlay();
+          restoreHeader();
+          showing = false;
+        }, 4000);
+      } else {
+        showBubble(nextMsg);
+      }
+    }
+  });
+
+  // === responsive + cleanup ===
+  window.addEventListener("resize", () => {
+    if (overlay.classList.contains("active")) {
+      hideOverlay();
+      restoreHeader();
+      showing = false;
+      clearAutoHide();
+    }
+    if (bubble.classList.contains("active") && window.innerWidth > 768) {
+      setTimeout(() => showBubble(bubble.textContent), 120);
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    clearAutoHide();
+    robot.removeEventListener("click", this);
+  });
+});
+
+
 
 
 
