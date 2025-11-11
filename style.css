@@ -979,6 +979,17 @@ header {
   }
 }
 
+/* === Fix double scrollbar when Wato bubble/overlay is active === */
+html, body {
+  overflow-x: hidden;
+}
+
+body.wato-lock {
+  overflow: hidden; /* disable scroll when Wato bubble is active */
+}
+
+
+
 
 
 
