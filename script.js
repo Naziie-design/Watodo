@@ -296,6 +296,10 @@ function hideBubble() {
   document.body.classList.remove("wato-lock");
 }
 
+}); // ← closes DOMContentLoaded event
+
+
+
 
 
 
