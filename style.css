@@ -665,6 +665,7 @@ header {
   cursor: pointer;
   color: var(--text);
   margin-left: 10px;
+  margin-right: 12px; /* ✅ adds breathing space from right edge */
   transition: transform 0.2s ease;
 }
 
@@ -677,6 +678,7 @@ header {
   .menu-toggle {
     display: block;
   }
+}
 
   /* Hide nav links initially */
   .header-nav {
@@ -976,6 +978,7 @@ header {
     transition: none !important;
   }
 }
+
 
 
 
