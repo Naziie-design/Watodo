@@ -264,89 +264,38 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.classList.remove("active");
   }
 
-  function showBubble(msg) {
-    bubble.textContent = msg;
-    const r = robot.getBoundingClientRect();
+function showBubble(msg) {
+  bubble.textContent = msg;
+  const r = robot.getBoundingClientRect();
+  const preferLeft = (window.innerWidth - r.right) < r.left;
+  let top = Math.max(6, r.top - 8);
+  let left;
 
-    const preferLeft = (window.innerWidth - r.right) < r.left;
-    let top = Math.max(6, r.top - 8);
-    let left;
-
-    if (preferLeft) {
+  if (preferLeft) {
+    left = r.left - bubble.offsetWidth - 12;
+    if (left < 8) left = r.right + 8;
+  } else {
+    left = r.right + 8;
+    if (left + bubble.offsetWidth > window.innerWidth - 8) {
       left = r.left - bubble.offsetWidth - 12;
-      if (left < 8) left = r.right + 8;
-    } else {
-      left = r.right + 8;
-      if (left + bubble.offsetWidth > window.innerWidth - 8) {
-        left = r.left - bubble.offsetWidth - 12;
-      }
     }
-
-    bubble.style.top = top + window.scrollY + "px";
-    bubble.style.left = left + window.scrollX + "px";
-    bubble.classList.add("active");
   }
 
-  function hideBubble() {
-    bubble.classList.remove("active");
-  }
+  bubble.style.top = top + window.scrollY + "px";
+  bubble.style.left = left + window.scrollX + "px";
+  bubble.classList.add("active");
 
-  // === main trigger ===
-  robot.addEventListener("click", (e) => {
-    e.stopImmediatePropagation();
-    clearAutoHide();
+  // ✅ prevent double scrollbar while visible
+  document.body.classList.add("wato-lock");
+}
 
-    if (!showing) {
-      fadeOutHeader();
-      setTimeout(() => {
-        const msg = messages[index];
-        if (window.innerWidth <= 768) {
-          showOverlay(msg);
-          autoHideTimer = setTimeout(() => {
-            hideOverlay();
-            restoreHeader();
-            showing = false;
-          }, 4000);
-        } else {
-          showBubble(msg);
-        }
-      }, 400);
-      showing = true;
-    } else {
-      index = (index + 1) % messages.length;
-      const nextMsg = messages[index];
-      if (window.innerWidth <= 768) {
-        overlay.textContent = nextMsg;
-        clearAutoHide();
-        autoHideTimer = setTimeout(() => {
-          hideOverlay();
-          restoreHeader();
-          showing = false;
-        }, 4000);
-      } else {
-        showBubble(nextMsg);
-      }
-    }
-  });
+function hideBubble() {
+  bubble.classList.remove("active");
 
-  // === responsive + cleanup ===
-  window.addEventListener("resize", () => {
-    if (overlay.classList.contains("active")) {
-      hideOverlay();
-      restoreHeader();
-      showing = false;
-      clearAutoHide();
-    }
-    if (bubble.classList.contains("active") && window.innerWidth > 768) {
-      setTimeout(() => showBubble(bubble.textContent), 120);
-    }
-  });
+  // ✅ re-enable scroll once hidden
+  document.body.classList.remove("wato-lock");
+}
 
-  window.addEventListener("pagehide", () => {
-    clearAutoHide();
-    robot.removeEventListener("click", this);
-  });
-});
 
 
 
